@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Ucapan Paskah</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card-container">
+        <div class="card" id="card">
+            <div class="card-front">
+                <h1>Happy Easter Days</h1>
+                <p>Enter your name to get special greeting</p>
+                
+                <div class="name-input">
+                    <input type="text" id="nameInput" placeholder="Nama Anda">
+                    <button onclick="generateGreeting()">Dapatkan pesan</button>
+                </div>
+                
+                <div class="decoration egg" style="top: 10%; left: 10%; background-color: #ff9a9e;"></div>
+                <div class="decoration egg" style="top: 80%; right: 15%; background-color: #a1c4fd;"></div>
+                <div class="decoration egg floating" style="bottom: 20%; left: 20%; background-color: #fad0c4;"></div>
+                <div class="decoration bunny" style="top: 15%; right: 15%;">🐰</div>
+                <div class="decoration bunny floating" style="bottom: 15%; left: 15%;">🐇</div>
+                <div class="decoration flower rotating" style="top: 30%; right: 30%;">🌸</div>
+                <div class="decoration flower" style="bottom: 30%; left: 30%;">🌼</div>
+            </div>
+            
+            <div class="card-back">
+                <div id="greeting" class="personalized-greeting">Selamat Paskah!</div>
+                <p id="randomMessage">Semoga hari Paskah ini membawa sukacita, damai, dan kebahagiaan bagi Anda dan keluarga.</p>
+                <p>🎉🎊🐣🌷</p>
+                
+                <div class="decoration egg" style="top: 10%; right: 10%; background-color: #c2e9fb;"></div>
+                <div class="decoration egg floating" style="top: 70%; left: 10%; background-color: #ffd3b6;"></div>
+                <div class="decoration bunny rotating" style="bottom: 20%; right: 20%;">🐇</div>
+                <div class="decoration flower" style="top: 20%; left: 20%;">🌺</div>
+                <div class="decoration flower floating" style="bottom: 30%; right: 30%;">🌹</div>
+            </div>
+            
+            <div class="flip-btn" onclick="flipCard()">↻</div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" autoplay loop>
+        <source src="musk.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Bank Ucapan Paskah
+        const easterMessages = [
+            "Ada kasih, ada pengorbanan, ada kemenangan dan ada terang baru. Kegelapan telah lenyap. Ia telah bangkit. Selamat Paskah semua. semoga kebahagiaan menyertai hidup kita selalu.",
+            "Pada hari ini kita diingatkan atas pengorbanan Anak yang Tunggal Yesus Kristus di kayu salib menebus dosa kita semua. Ia telah bamgkit untuk memberi kita hidup baru! Selamat Paskah. Tuhan Memberkati.",
+            "Kiranya kebangkitan Yesus Kristus menjadi sebuah dorongan untuk memulai hidup baru yang lebih baik. Selamat Hari Paskah bagi kita semua, Semoga keajaiban paskah ini selalu membawa harapan, kasih dan kegembiraan yang berlimpah di tengah-tengah hidup kita. Amin",
+            "Semoga Tuhan Yesus senantiasa memberkati kamu dan keluargamu dengan iman dan kebahagiaan yang melimpah dan tak tergoyahkan pada Paskah Tahun ini.",
+            "Selamat Paskah! Semoga kebangkitan Kristus semakin menambah semangat kita untuk hidup seturut dengan kehendak-Nya untuk mengasihi dan melayani sesama dengan penuh sukacita. Semoga kita selalu siap menjadi saksi Kristus.",
+            "Terpujilah Allah dan Bapa Tuhan kita Yesus Kristus, yang karena rahmat-Nya yang besar telah melahirkan kita kembali oleh kebangkitan Yesus Kristus dari antara orang mati, kepada suatu hidup yang penuh pengharapan. Selamat Paskah",
+            "Yang kukehendaki ialah mengenal Dia dan kuasa kebangkitan-Nya dan persekutuan dalam penderitaan-Nya, di mana aku menjadi serupa dengan Dia dalam kematian-Nya. Selamat Paskah teman-temanku",
+            "Yang kukehendaki ialah mengenal Dia dan kuasa kebangkitan-Nya dan persekutuan dalam penderitaan-Nya, di mana aku menjadi serupa dengan Dia dalam kematian-Nya. Selamat Paskah teman-temanku",
+            "Selamat Paskah! Semoga kebangkitan Kristus semakin menambah semangat kita untuk hidup seturut dengan kehendak-Nya untuk mengasihi dan melayani sesama dengan penuh sukacita. Semoga kita selalu siap menjadi saksi Kristus.",
+            "Selamat Paskah! Semoga kasih dan damai Kristus selalu menyertai kita semua. Mari kita rayakan kebangkitan-Nya dengan penuh sukacita dan harapan baru."
+
+        ];
+
+        // Fungsi untuk mendapatkan ucapan random
+        function getRandomMessage() {
+            const randomIndex = Math.floor(Math.random() * easterMessages.length);
+            return easterMessages[randomIndex];
+        }
+
+        // Generate personalized greeting
+        function generateGreeting() {
+            const name = document.getElementById('nameInput').value.trim();
+            const greetingElement = document.getElementById('greeting');
+            const messageElement = document.getElementById('randomMessage');
+            
+            if (name) {
+                greetingElement.textContent = `Selamat Paskah, ${name}!`;
+                messageElement.textContent = getRandomMessage();
+                flipCard();
+            } else {
+                alert('Silakan masukkan nama Anda terlebih dahulu.');
+            }
+        }
+        
+        // Flip card animation
+        function flipCard() {
+            const card = document.getElementById('card');
+            card.style.transform = card.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+        }
+        
+        // Create random decorations
+        function createDecorations() {
+            const decorations = ['🌸', '🌼', '🌺', '🌹', '🐰', '🐇', '🐣', '🥚'];
+            const colors = ['#ff9a9e', '#fad0c4', '#a1c4fd', '#c2e9fb', '#ffd3b6', '#d4fc79'];
+            
+            for (let i = 0; i < 10; i++) {
+                const decoration = document.createElement('div');
+                decoration.className = 'decoration';
+                decoration.style.left = `${Math.random() * 90 + 5}%`;
+                decoration.style.top = `${Math.random() * 90 + 5}%`;
+                
+                if (Math.random() > 0.5) {
+                    decoration.classList.add('floating');
+                    decoration.style.animationDuration = `${3 + Math.random() * 4}s`;
+                }
+                
+                if (Math.random() > 0.7) {
+                    decoration.classList.add('rotating');
+                }
+                
+                if (Math.random() > 0.5) {
+                    // Create egg
+                    decoration.classList.add('egg');
+                    decoration.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    decoration.style.width = `${30 + Math.random() * 30}px`;
+                    decoration.style.height = `${40 + Math.random() * 30}px`;
+                } else {
+                    // Create emoji decoration
+                    decoration.style.fontSize = `${1 + Math.random() * 2}rem`;
+                    decoration.textContent = decorations[Math.floor(Math.random() * decorations.length)];
+                }
+                
+                document.querySelector('.card-front').appendChild(decoration);
+                document.querySelector('.card-back').appendChild(decoration.cloneNode(true));
+            }
+        }
+        
+        // Initialize decorations and music
+        window.onload = function() {
+            createDecorations();
+            
+            // Coba memutar musik otomatis (mungkin tidak bekerja di semua browser karena kebijakan autoplay)
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.volume = 0.3; // Atur volume lebih rendah
+            
+            // Tangani error autoplay
+            const playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented. Musik akan mulai setelah interaksi pengguna.");
+                    // Mulai musik ketika pengguna berinteraksi
+                    document.addEventListener('click', function() {
+                        bgMusic.play();
+                    }, { once: true });
+                });
+            }
+        };
+    </script>
+</body>
+</html>
